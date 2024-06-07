@@ -1,12 +1,11 @@
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org/"
->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="~{base :: html-head(~{::title})}">
     <title>ToDo - task list</title>
 </head>
 <body>
-<nav th:replace="~{base :: navbar}"/>
-<div th:replace="~{auth/login :: login-form}"/>
+<nav th:replace="~{base :: navbar}"></nav>
+<div th:replace="~{auth/login :: login-form}"></div>
 
 <table class="table">
     <thead>
@@ -15,28 +14,30 @@
         <th scope="col">Summary</th>
         <th scope="col">Description</th>
         <th scope="col">Status</th>
-<!--        <th scope="col">Category</th>-->
-<!--        <th scope="col">Start date</th>-->
-<!--        <th scope="col">Due date</th>-->
-        <th scope="col">Delete</th>
+        <th scope="col">Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="task: ${tasks}">
+    <tr th:each="task : ${tasks}">
         <th scope="row" th:text="${task.id}"></th>
         <td th:text="${task.summary}"></td>
         <td th:text="${task.description}"></td>
         <td>
-            <form id="statusForm" name="statusForm" th:action="/task/status/${task.id}" method="post" onchange="submit()">
+            <form id="statusForm" name="statusForm" th:action="@{/task/status/{id}(id=${task.id})}" method="post" onchange="this.submit()">
                 <select name="status">
-                    <option th:each="status: ${statusList}" th:value="${status.name}" th:text="${status.displayName}"></option>
+                    <option th:each="status : ${statusList}" th:value="${status.name}" th:text="${status.displayName}" th:selected="${status.name == task.status}"></option>
                 </select>
-            </form>        
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/task/delete/{id}(id=${task.id})}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+            <a th:href="@{/task/edit/{id}(id=${task.id})}" class="btn btn-primary" style="display:inline;">Edit</a>
         </td>
     </tr>
     </tbody>
 </table>
-
 
 </body>
 </html>

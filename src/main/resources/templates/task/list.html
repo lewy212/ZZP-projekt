@@ -14,7 +14,7 @@
         <th scope="col">Summary</th>
         <th scope="col">Description</th>
         <th scope="col">Status</th>
-        <th scope="col">Delete</th>
+        <th scope="col">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -30,9 +30,10 @@
             </form>
         </td>
         <td>
-            <form th:action="@{/task/delete/{id}(id=${task.id})}" method="post">
+            <form th:action="@{/task/delete/{id}(id=${task.id})}" method="post" style="display:inline;">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
+            <a th:href="@{/task/edit/{id}(id=${task.id})}" class="btn btn-primary" style="display:inline;">Edit</a>
         </td>
     </tr>
     </tbody>
