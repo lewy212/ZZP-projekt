@@ -24,7 +24,7 @@ class TaskController {
 
     private final TaskStatusService taskStatusService;
 
-    @GetMapping
+    @GetMapping()
     String getTaskList(Model model) {
         List<TaskDTO> taskList = taskService.getTaskList();
         List<TaskStatusDTO> userTaskStatusList = taskStatusService.getUserTaskStatusList();
