@@ -22,13 +22,14 @@
         <th scope="row" th:text="${task.id}"></th>
         <td th:text="${task.summary}"></td>
         <td th:text="${task.description}"></td>
-        <td>
-            <form id="statusForm" name="statusForm" th:action="@{/task/status/{id}(id=${task.id})}" method="post" onchange="this.submit()">
-                <select name="status">
-                    <option th:each="status : ${statusList}" th:value="${status.name}" th:text="${status.displayName}" th:selected="${status.name == task.status}"></option>
-                </select>
-            </form>
-        </td>
+        <td th:text="${task.status.displayName}"></td>
+<!--        <td>-->
+<!--            <form id="statusForm" name="statusForm" th:action="@{/task/status/{id}(id=${task.id})}" method="post" onchange="this.submit()">-->
+<!--                <select name="status">-->
+<!--                    <option th:each="status : ${statusList}" th:value="${status.name}" th:text="${status.displayName}" th:selected="${status.name == task.status}"></option>-->
+<!--                </select>-->
+<!--            </form>-->
+<!--        </td>-->
         <td>
             <form th:action="@{/task/delete/{id}(id=${task.id})}" method="post" style="display:inline;">
                 <button type="submit" class="btn btn-danger">Delete</button>

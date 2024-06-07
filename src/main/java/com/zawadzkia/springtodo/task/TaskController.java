@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -37,6 +38,7 @@ class TaskController {
     @GetMapping()
     String getTaskList(Model model) {
         List<TaskDTO> taskList = taskService.getTaskList();
+        taskList.sort(Comparator.comparing(TaskDTO::getId));
         List<TaskStatusDTO> userTaskStatusList = taskStatusService.getUserTaskStatusList();
         model.addAttribute("tasks", taskList);
         model.addAttribute("statusList", userTaskStatusList);
@@ -86,13 +88,13 @@ class TaskController {
         taskService.save(task);
 
 
-        return "redirect:/task/list";
+        return "redirect:/task";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteTask(@PathVariable Long id){
         taskService.delete(id);
-        return "reditect:/task/list";
+        return "redirect:/task";
     }
 
 
