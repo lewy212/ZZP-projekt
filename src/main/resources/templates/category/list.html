@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="~{base :: html-head(~{::title})}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" th:href="@{/favicon.png}">
+  <link href="#" th:href="@{/webjars/bootstrap/5.3.2/dist/css/bootstrap.min.css}" rel="stylesheet"/>
+  <link href="#" th:href="@{/css/main.css}" rel="stylesheet"/>
+  <script type="application/javascript" th:src="@{/webjars/bootstrap/5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
+  <script type="application/javascript" th:src="@{/js/main.js}"></script>
+  <title>ToDo - task list</title>
+</head>
+<body>
+<nav th:replace="~{base :: navbar}"></nav>
+<div th:replace="~{auth/login :: login-form}"></div>
+
+<div class="container mt-5">
+  <h1 class="mb-4">Category List</h1>
+  <table class="table table-striped">
+    <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category : ${categoryList}">
+      <td th:text="${category.id}"></td>
+      <td th:text="${category.name}"></td>
+      <td th:text="${category.description}"></td>
+      <td>
+        <form th:action="@{'/category/delete/' + ${category.id}}" method="post">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <a class="btn btn-primary mt-3" th:href="@{/category/add}">Add New Category</a>
+</div>
+</body>
+</html>

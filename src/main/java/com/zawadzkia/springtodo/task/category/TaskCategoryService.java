@@ -35,4 +35,16 @@ public class TaskCategoryService {
         }
         return result;
     }
+    public void addCategoryWithUser(TaskCategoryModel categoryModel)
+    {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof AppUserDetails userDetails) {
+           categoryModel.setOwner(userDetails.getUser());
+           taskCategoryRepository.save(categoryModel);
+        }
+    }
+    public void delete(Long id){
+        TaskCategoryModel categoryModel = taskCategoryRepository.getReferenceById(id);
+        taskCategoryRepository.delete(categoryModel);
+    }
 }
