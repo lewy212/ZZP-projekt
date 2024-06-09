@@ -97,5 +97,31 @@ class TaskController {
         return "redirect:/task";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editTaskForm(@PathVariable Long id, Model model){
+        TaskDTO task = taskService.getTaskDTOById(id);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String startDate = task.getStartDate().format(formatter);
+        String dueDate = task.getDueDate().format(formatter);
+
+        model.addAttribute("task", task);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("dueDate", dueDate);
+        model.addAttribute("categories", taskCategoryService.getCategories());
+        model.addAttribute("statuses", taskStatusService.getUserTaskStatusList());
+        return "task/edit";
+    }
+
+    @PostMapping("/edit")
+    public String editTask(@ModelAttribute("task") TaskDTO taskDTO,
+                           BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "task/edit";
+        }
+
+        taskService.update(taskDTO);
+        return "redirect:/task";
+    }
 
 }
