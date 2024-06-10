@@ -31,6 +31,7 @@
         <form th:action="@{'/user/delete/' + ${user.id}}" method="post">
           <button type="submit" class="btn btn-danger">Delete</button>
         </form>
+        <a th:href="@{'/user/edit/' + ${user.id}}" class="btn btn-primary">Edit</a>
       </td>
     </tr>
     </tbody>

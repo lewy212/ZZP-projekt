@@ -18,7 +18,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     @GetMapping()
-    public String getStatusList(Model model) {
+    public String getUserList(Model model) {
         List<UserDTO> userList = userService.getUsers(); // Call the correct method
         userList.sort(Comparator.comparing(UserDTO::getId));
         model.addAttribute("userList",  userList);
@@ -26,13 +26,13 @@ public class UserController {
     }
 
     @GetMapping("/add")
-    public String addStatusView(Model model) {
+    public String addUser(Model model) {
         model.addAttribute("user", new UserDTO());
         return "user/create";
     }
 
     @PostMapping("/add")
-    public String addStatus(@ModelAttribute("user") UserDTO userDTO, BindingResult bindingResult) {
+    public String addUser(@ModelAttribute("user") UserDTO userDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "user/create";
         }
@@ -40,8 +40,31 @@ public class UserController {
         return "redirect:/user";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editUserView(@PathVariable Long id, Model model) {
+        UserModel usermodel = userService.getUser(id);
+
+        UserDTO userDTO = new UserDTO(usermodel.getId(), usermodel.getUsername(),usermodel.getPassword());
+        if (userDTO.getPassword().startsWith("{noop}")) {
+            userDTO.setPassword(userDTO.getPassword().substring(6));
+        }
+        model.addAttribute("user", userDTO);
+        return "user/edit";
+    }
+
+    @PostMapping("/edit")
+    public String editUser(@ModelAttribute("user") UserDTO userDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            System.out.println("Mam errora");
+            return "user/edit";
+        }
+        System.out.println("Jestem tutaj");
+        userService.updateUser(userDTO);
+        return "redirect:/user";
+    }
+
     @PostMapping("/delete/{id}")
-    public String deleteStatus(@PathVariable Long id) {
+    public String deleteUser(@PathVariable Long id) {
         userService.delete(id);
         return "redirect:/user";
     }

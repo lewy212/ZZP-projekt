@@ -21,8 +21,6 @@ public class AppUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("Username %s not found!", username));
         }
-        else {
-        }
         return new AppUserDetails(user);
     }
 }

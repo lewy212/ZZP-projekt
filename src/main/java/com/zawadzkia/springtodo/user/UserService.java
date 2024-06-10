@@ -4,6 +4,7 @@ import com.zawadzkia.springtodo.auth.Authority;
 import com.zawadzkia.springtodo.auth.AuthorityRepository;
 import com.zawadzkia.springtodo.task.status.TaskStatusDTO;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -50,5 +51,13 @@ public class UserService {
     public void delete(Long id) {
         UserModel userModel = userRepository.getReferenceById(id);
         userRepository.delete(userModel);
+    }
+
+    public void updateUser(UserDTO userDTO) {
+        System.out.println("Nie wchodze");
+        UserModel userModel = userRepository.getReferenceById(userDTO.getId());
+        userModel.setUsername(userDTO.getLogin());
+        userModel.setPassword("{noop}"+userDTO.getPassword());
+        userRepository.save(userModel);
     }
 }
