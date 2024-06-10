@@ -1,6 +1,7 @@
 package com.zawadzkia.springtodo.user;
 
 import com.zawadzkia.springtodo.auth.Authority;
+import com.zawadzkia.springtodo.auth.AuthorityRepository;
 import com.zawadzkia.springtodo.task.status.TaskStatusDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
     //public List<UserModel> getUsers(){return userRepository.findAll();}
     public UserModel getUser(Long id){return userRepository.getReferenceById(id);}
     public UserModel getUser(String nazwa){return userRepository.findByUsername(nazwa);}
@@ -35,6 +37,14 @@ public class UserService {
         }
 
         return result;
+    }
+    public void addUser(UserDTO userDTO){
+        UserModel userModel = new UserModel();
+        userModel.setUsername(userDTO.getLogin());
+        userModel.setPassword("{noop}"+userDTO.getPassword());
+        userModel.getAuthorities().add(authorityRepository.findByAuthority("USER"));
+        userModel.setEnabled(true);
+        userRepository.save(userModel);
     }
 
     public void delete(Long id) {
