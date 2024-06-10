@@ -17,7 +17,6 @@
   <table class="table table-striped">
     <thead class="table-dark">
     <tr>
-      <th>ID</th>
       <th>Name</th>
       <th>Display Name</th>
       <th>Action</th>
@@ -25,7 +24,6 @@
     </thead>
     <tbody>
     <tr th:each="status : ${statusList}">
-      <td th:text="${status.id}"></td>
       <td th:text="${status.name}"></td>
       <td th:text="${status.displayName}"></td>
       <td>

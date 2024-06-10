@@ -18,7 +18,6 @@
   <table class="table table-striped">
     <thead class="table-dark">
     <tr>
-      <th>ID</th>
       <th>Name</th>
       <th>Description</th>
       <th>Action</th>
@@ -26,7 +25,6 @@
     </thead>
     <tbody>
     <tr th:each="category : ${categoryList}">
-      <td th:text="${category.id}"></td>
       <td th:text="${category.name}"></td>
       <td th:text="${category.description}"></td>
       <td>
