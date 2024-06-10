@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="~{base :: html-head(~{::title})}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" th:href="@{/favicon.png}">
+  <link href="#" th:href="@{/webjars/bootstrap/5.3.2/dist/css/bootstrap.min.css}" rel="stylesheet"/>
+  <link href="#" th:href="@{/css/main.css}" rel="stylesheet"/>
+  <script type="application/javascript" th:src="@{/webjars/bootstrap/5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
+  <script type="application/javascript" th:src="@{/js/main.js}"></script>
+  <title>ToDo - Status List</title>
+</head>
+<body>
+<nav th:replace="~{base :: navbar}"></nav>
+
+<div class="container mt-5">
+  <h1 class="mb-4">Status List</h1>
+  <table class="table table-striped">
+    <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Display Name</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="status : ${statusList}">
+      <td th:text="${status.id}"></td>
+      <td th:text="${status.name}"></td>
+      <td th:text="${status.displayName}"></td>
+      <td>
+        <form th:action="@{'/status/delete/' + ${status.id}}" method="post">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <a class="btn btn-primary mt-3" th:href="@{/status/add}">Add New Status</a>
+</div>
+</body>
+</html>
