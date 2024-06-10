@@ -24,7 +24,6 @@ public class UserService {
         List<UserModel> users = userRepository.findAll();
 
         for (UserModel user : users) {
-            System.out.println(user.getPassword());
             boolean isAdmin = false;
             for (Authority authority : user.getAuthorities()) {
                 if (authority.getAuthority().equals("ADMIN")) {

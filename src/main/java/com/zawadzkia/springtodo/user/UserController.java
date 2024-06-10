@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Comparator;
 import java.util.List;
 
@@ -32,13 +32,23 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String addUser(@ModelAttribute("user") UserDTO userDTO, BindingResult bindingResult) {
+    public String addUser(@ModelAttribute("user") UserDTO userDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "user/create";
         }
+
+
+        UserModel existingUser = userService.getUser(userDTO.getLogin());
+        if (existingUser != null) {
+            String login = userDTO.getLogin();
+            redirectAttributes.addFlashAttribute("userExistsError", "User with login " + login + " already exists.");
+            return "redirect:/user/add";
+        }
+
         userService.addUser(userDTO);
         return "redirect:/user";
     }
+
 
     @GetMapping("/edit/{id}")
     public String editUserView(@PathVariable Long id, Model model) {
@@ -53,12 +63,17 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String editUser(@ModelAttribute("user") UserDTO userDTO, BindingResult bindingResult) {
+    public String editUser(@ModelAttribute("user") UserDTO userDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            System.out.println("Mam errora");
+
             return "user/edit";
         }
-        System.out.println("Jestem tutaj");
+        UserModel existingUser = userService.getUser(userDTO.getLogin());
+        if (existingUser != null) {
+            String login = userDTO.getLogin();
+            redirectAttributes.addFlashAttribute("userExistsError", "User with login " + login + " already exists.");
+            return "redirect:/user/edit/" + userDTO.getId();
+        }
         userService.updateUser(userDTO);
         return "redirect:/user";
     }

@@ -28,7 +28,7 @@
       <td th:text="${user.login}"></td>
       <td th:text="${user.password}" th:utext="${#strings.replace(user.password, '{noop}', '')}"></td>
       <td>
-        <form th:action="@{'/user/delete/' + ${user.id}}" method="post">
+        <form th:action="@{'/user/delete/' + ${user.id}}" method="post" class="d-inline">
           <button type="submit" class="btn btn-danger">Delete</button>
         </form>
         <a th:href="@{'/user/edit/' + ${user.id}}" class="btn btn-primary">Edit</a>
@@ -38,5 +38,6 @@
   </table>
   <a class="btn btn-primary mt-3" th:href="@{/user/add}">Add New User</a>
 </div>
+
 </body>
 </html>

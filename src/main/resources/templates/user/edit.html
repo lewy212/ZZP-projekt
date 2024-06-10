@@ -15,6 +15,9 @@
 
 <div class="container mt-5">
   <h1 class="mb-4">Edit User</h1>
+  <div th:if="${userExistsError}" class="alert alert-danger" role="alert">
+    <p th:text="${userExistsError}"></p>
+  </div>
   <form th:action="@{/user/edit}" th:object="${user}" method="post">
     <input type="hidden" th:field="*{id}" />
     <div class="mb-3">

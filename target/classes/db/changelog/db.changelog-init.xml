@@ -86,9 +86,6 @@
     <changeSet id="1698686406241-8" author="spring-todo">
         <addUniqueConstraint columnNames="username" constraintName="uc_usermodel_username" tableName="users"/>
     </changeSet>
-    <changeSet id="1698686406241-9" author="spring-todo">
-        <addUniqueConstraint columnNames="password" constraintName="uc_users_password" tableName="users"/>
-    </changeSet>
     <changeSet id="1698686406241-10" author="spring-todo">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="authorities"
                                  constraintName="FK_AUTHORITIES_ON_USER" referencedColumnNames="id"
