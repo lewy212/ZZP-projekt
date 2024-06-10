@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="~{base :: html-head(~{::title})}">
+    <title>ToDo - Edit Task</title>
+</head>
+<body>
+<nav th:replace="~{base :: navbar}"></nav>
+<div th:replace="~{auth/login :: login-form}"></div>
+<div class="container mt-5">
+    <h2>Edit Task</h2>
+    <form th:action="@{/task/edit}" th:object="${task}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div class="mb-3">
+            <label for="summary" class="form-label">Summary</label>
+            <input type="text" class="form-control" id="summary" th:field="*{summary}" placeholder="Enter task summary" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" th:field="*{description}" placeholder="Enter task description" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="datetime-local" class="form-control" id="startDate" th:field="*{startDate}" value="${startDate}" required>
+        </div>
+        <div class="mb-3">
+            <label for="dueDate" class="form-label">Due Date</label>
+            <input type="datetime-local" class="form-control" id="dueDate" th:field="*{dueDate}" value="${dueDate}" required>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select" id="category" th:field="*{category.id}" required>
+                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" th:field="*{status.id}" required>
+                <option th:each="status : ${statuses}" th:value="${status.id}" th:text="${status.displayName}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+</body>
+</html>
