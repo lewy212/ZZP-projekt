@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="~{base :: html-head(~{::title})}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.png}">
+    <link href="#" th:href="@{/webjars/bootstrap/5.3.2/dist/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="#" th:href="@{/css/main.css}" rel="stylesheet"/>
+    <script type="application/javascript" th:src="@{/webjars/bootstrap/5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
+    <script type="application/javascript" th:src="@{/js/main.js}"></script>
+    <title>ToDo - task list</title>
+</head>
+<body>
+<nav th:replace="~{base :: navbar}"></nav>
+<div th:replace="~{auth/login :: login-form}"></div>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Add New User</h1>
+    <div th:if="${userExistsError}" class="alert alert-danger" role="alert">
+        <p th:text="${userExistsError}"></p>
+    </div>
+    <form th:action="@{/user/add}" th:object="${user}" method="post">
+        <div class="mb-3">
+            <label for="login" class="form-label">Login:</label>
+            <input type="text" id="login" th:field="*{login}" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="text" id="password" th:field="*{password}" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+    <a class="btn btn-secondary mt-3" th:href="@{/user}">Back to List</a>
+</div>
+</body>
+</html>

@@ -7,29 +7,25 @@
   <link href="#" th:href="@{/css/main.css}" rel="stylesheet"/>
   <script type="application/javascript" th:src="@{/webjars/bootstrap/5.3.2/dist/js/bootstrap.bundle.min.js}"></script>
   <script type="application/javascript" th:src="@{/js/main.js}"></script>
-  <title>ToDo - task list</title>
+  <title>ToDo - Add New Status</title>
 </head>
 <body>
 <nav th:replace="~{base :: navbar}"></nav>
-<div th:replace="~{auth/login :: login-form}"></div>
 
 <div class="container mt-5">
-  <h1 class="mb-4">Add New Category</h1>
-  <div th:if="${categoryExistsError}" class="alert alert-danger" role="alert">
-    <p th:text="${categoryExistsError}"></p>
-  </div>
-  <form th:action="@{/category/add}" th:object="${category}" method="post">
+  <h1 class="mb-4">Add New Status</h1>
+  <form th:action="@{/status/add}" th:object="${status}" method="post">
     <div class="mb-3">
       <label for="name" class="form-label">Name:</label>
       <input type="text" id="name" th:field="*{name}" class="form-control" required />
     </div>
     <div class="mb-3">
-      <label for="description" class="form-label">Description:</label>
-      <input type="text" id="description" th:field="*{description}" class="form-control" />
+      <label for="displayName" class="form-label">Display Name:</label>
+      <input type="text" id="displayName" th:field="*{displayName}" class="form-control" />
     </div>
     <button type="submit" class="btn btn-primary">Add</button>
   </form>
-  <a class="btn btn-secondary mt-3" th:href="@{/category}">Back to List</a>
+  <a class="btn btn-secondary mt-3" th:href="@{/status}">Back to List</a>
 </div>
 </body>
 </html>

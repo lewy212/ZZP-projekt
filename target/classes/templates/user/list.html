@@ -14,22 +14,30 @@
 <div th:replace="~{auth/login :: login-form}"></div>
 
 <div class="container mt-5">
-  <h1 class="mb-4">Add New Category</h1>
-  <div th:if="${categoryExistsError}" class="alert alert-danger" role="alert">
-    <p th:text="${categoryExistsError}"></p>
-  </div>
-  <form th:action="@{/category/add}" th:object="${category}" method="post">
-    <div class="mb-3">
-      <label for="name" class="form-label">Name:</label>
-      <input type="text" id="name" th:field="*{name}" class="form-control" required />
-    </div>
-    <div class="mb-3">
-      <label for="description" class="form-label">Description:</label>
-      <input type="text" id="description" th:field="*{description}" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary">Add</button>
-  </form>
-  <a class="btn btn-secondary mt-3" th:href="@{/category}">Back to List</a>
+  <h1 class="mb-4">Category List</h1>
+  <table class="table table-striped">
+    <thead class="table-dark">
+    <tr>
+      <th>Login</th>
+      <th>Password</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${userList}">
+      <td th:text="${user.login}"></td>
+      <td th:text="${user.password}" th:utext="${#strings.replace(user.password, '{noop}', '')}"></td>
+      <td>
+        <form th:action="@{'/user/delete/' + ${user.id}}" method="post" class="d-inline">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+        <a th:href="@{'/user/edit/' + ${user.id}}" class="btn btn-primary">Edit</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <a class="btn btn-primary mt-3" th:href="@{/user/add}">Add New User</a>
 </div>
+
 </body>
 </html>
