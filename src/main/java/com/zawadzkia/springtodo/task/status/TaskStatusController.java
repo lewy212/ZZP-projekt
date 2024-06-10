@@ -55,4 +55,19 @@ public class TaskStatusController {
         taskService.update(taskDTO);
         return "task/list";
     }
+    @GetMapping("/edit/{id}")
+    public String editStatusView(@PathVariable Long id, Model model) {
+        TaskStatusModel status = taskStatusService.getStatusById(id);
+        model.addAttribute("status", status);
+        return "status/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editStatus(@PathVariable Long id, @ModelAttribute("status") TaskStatusModel status, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "status/edit";
+        }
+        taskStatusService.updateStatus(id, status);
+        return "redirect:/status";
+    }
 }

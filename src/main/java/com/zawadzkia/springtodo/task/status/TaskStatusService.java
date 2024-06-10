@@ -46,4 +46,14 @@ public class TaskStatusService {
         TaskStatusModel statusModel = taskStatusRepository.getReferenceById(id);
         taskStatusRepository.delete(statusModel);
     }
+    public TaskStatusModel getStatusById(Long id) {
+        return taskStatusRepository.findById(id).orElseThrow(() -> new RuntimeException("Status not found"));
+    }
+
+    public void updateStatus(Long id, TaskStatusModel updatedStatus) {
+        TaskStatusModel existingStatus = taskStatusRepository.findById(id).orElseThrow(() -> new RuntimeException("Status not found"));
+        existingStatus.setName(updatedStatus.getName());
+        existingStatus.setDisplayName(updatedStatus.getDisplayName());
+        taskStatusRepository.save(existingStatus);
+    }
 }

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="~{base :: html-head(~{::title})}">
+    <title>Edit Status</title>
+</head>
+<body>
+<nav th:replace="~{base :: navbar}"></nav>
+<div th:replace="~{auth/login :: login-form}"></div>
+<div class="container mt-5">
+    <h2>Edit Status</h2>
+    <form th:action="@{/status/edit/{id}(id=${status.id})}" th:object="${status}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter status name" required>
+        </div>
+        <div class="mb-3">
+            <label for="displayName" class="form-label">Display Name</label>
+            <input type="text" class="form-control" id="displayName" th:field="*{displayName}" placeholder="Enter display name" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Status</button>
+    </form>
+</div>
+</body>
+</html>

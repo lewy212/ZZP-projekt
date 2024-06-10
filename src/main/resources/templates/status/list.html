@@ -11,6 +11,7 @@
 </head>
 <body>
 <nav th:replace="~{base :: navbar}"></nav>
+<div th:replace="~{auth/login :: login-form}"></div>
 
 <div class="container mt-5">
   <h1 class="mb-4">Status List</h1>
@@ -27,9 +28,10 @@
       <td th:text="${status.name}"></td>
       <td th:text="${status.displayName}"></td>
       <td>
-        <form th:action="@{'/status/delete/' + ${status.id}}" method="post">
+        <form th:action="@{'/status/delete/' + ${status.id}}" method="post" class="d-inline">
           <button type="submit" class="btn btn-danger">Delete</button>
         </form>
+        <a th:href="@{'/status/edit/' + ${status.id}}" class="btn btn-primary">Edit</a>
       </td>
     </tr>
     </tbody>
