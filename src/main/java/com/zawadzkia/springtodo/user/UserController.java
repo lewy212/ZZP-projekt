@@ -71,8 +71,12 @@ public class UserController {
         UserModel existingUser = userService.getUser(userDTO.getLogin());
         if (existingUser != null) {
             String login = userDTO.getLogin();
-            redirectAttributes.addFlashAttribute("userExistsError", "User with login " + login + " already exists.");
-            return "redirect:/user/edit/" + userDTO.getId();
+            if(!userService.getUser(userDTO.getId()).getUsername().equals(login))
+            {
+                redirectAttributes.addFlashAttribute("userExistsError", "User with login " + login + " already exists.");
+                return "redirect:/user/edit/" + userDTO.getId();
+            }
+
         }
         userService.updateUser(userDTO);
         return "redirect:/user";

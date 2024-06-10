@@ -69,7 +69,7 @@ class TaskController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserModel loggedUser = userService.getUser(authentication.getName());
 
-        TaskCategoryModel category = taskCategoryService.getTaskCategoryModelByNazwaAndUser(dto.getCategory().getName());
+        TaskCategoryModel category = taskCategoryService.getCategoryModelByNazwaAndUser(dto.getCategory().getName());
         TaskStatusModel status = taskStatusService.getTaskStatusModelByNazwaAndUser(dto.getStatus().getName());
 
         TaskModel task = new TaskModel();

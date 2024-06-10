@@ -28,9 +28,10 @@
       <td th:text="${category.name}"></td>
       <td th:text="${category.description}"></td>
       <td>
-        <form th:action="@{'/category/delete/' + ${category.id}}" method="post">
+        <form  th:action="@{'/category/delete/' + ${category.id}}" method="post" class="d-inline">
           <button type="submit" class="btn btn-danger">Delete</button>
         </form>
+        <a th:href="@{'/category/edit/' + ${category.id}}" class="btn btn-primary">Edit</a>
       </td>
     </tr>
     </tbody>
